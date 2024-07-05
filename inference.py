@@ -90,7 +90,7 @@ def main(args):
     shutil.move(result, save_dir+'.mp4')
     print('The generated video is named:', save_dir+'.mp4')
 
-    if not args.verbose:
+    if not args.no_cleanup:
         shutil.rmtree(save_dir)
 
     
@@ -117,7 +117,7 @@ if __name__ == '__main__':
     parser.add_argument("--face3dvis", action="store_true", help="generate 3d face and 3d landmarks") 
     parser.add_argument("--still", action="store_true", help="can crop back to the original videos for the full body aniamtion") 
     parser.add_argument("--preprocess", default='crop', choices=['crop', 'extcrop', 'resize', 'full', 'extfull'], help="how to preprocess the images" ) 
-    parser.add_argument("--verbose",action="store_true", help="saving the intermedia output or not" ) 
+    parser.add_argument("--no-cleanup",action="store_false", help="saving the intermedia output or not" )
     parser.add_argument("--old_version",action="store_true", help="use the pth other than safetensor version" ) 
 
 
