@@ -4,6 +4,7 @@ import torch
 from time import  strftime
 import os, sys, time
 from argparse import ArgumentParser
+from pathlib import Path
 
 from src.utils.preprocess import CropAndExtract
 from src.test_audio2coeff import Audio2Coeff  
@@ -11,6 +12,7 @@ from src.facerender.animate import AnimateFromCoeff
 from src.generate_batch import get_data
 from src.generate_facerender_batch import get_facerender_data
 from src.utils.init_path import init_path
+from src.convert import Converter
 
 def main(args):
     #torch.backends.cudnn.enabled = False
@@ -27,6 +29,15 @@ def main(args):
     input_roll_list = args.input_roll
     ref_eyeblink = args.ref_eyeblink
     ref_pose = args.ref_pose
+
+    if Converter.get_type(audio_path) == 'video':
+        audio_path = Converter(audio_path).to("wav")
+
+    if ref_eyeblink is not None and Path(ref_eyeblink).suffix.lower() != '.mp4':
+        ref_eyeblink = Converter(ref_eyeblink).to("mp4")
+
+    if ref_pose is not None and Path(ref_pose).suffix.lower() != '.mp4':
+        ref_pose = Converter(ref_pose).to("mp4")
 
     current_root_path = os.path.split(sys.argv[0])[0]
 
