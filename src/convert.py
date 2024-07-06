@@ -23,6 +23,7 @@ class Converter:
             obj = self.video
         else:
             raise ValueError(f"Unsupported extension {extension}")
+        print(f"Converting {self.video_path} to {output_path}")
         obj.write_videofile(output_path)
         return output_path
 
